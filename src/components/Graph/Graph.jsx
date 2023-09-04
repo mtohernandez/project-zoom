@@ -28,7 +28,7 @@ const Graph = () => {
     fg.zoomToFit(updateDuration, 150);
   };
 
-  if (data.nodes.length > 0 && data.links.length > 0) {
+  if (data.nodes?.length > 0 && data.links.length > 0) {
     return (
       <div className={graph__container}>
         <ForceGraph2D
@@ -66,7 +66,7 @@ const Graph = () => {
     );
   }
 
-  if (data.nodes.length > 0 && data.links.length === 0) {
+  if (data.nodes?.length > 0 && data.links.length === 0) {
     return (
       <div className={graph__container}>
         <h3 className={graph__container_awaiter}>Waiting for connections...</h3>

@@ -55,7 +55,7 @@ function App() {
                 };
               });
             }}
-            isDisabled={data.nodes.length === 0}
+            isDisabled={data.nodes?.length === 0}
           />
         </Container>
         <Container area="graph">
