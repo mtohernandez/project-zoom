@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { transformNodes } from "./utils/transformNodes";
 import { transformLinks } from "./utils/transformLinks";
 import DataContext from "./context/dataContext";
@@ -18,10 +18,6 @@ function App() {
     links: [],
   });
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <DataContext.Provider
       value={{
@@ -37,9 +33,10 @@ function App() {
             label="Nodes"
             input="Copy and paste the list of nodes (airports)."
             button="launch"
-            action={(data) =>
-              setData({ nodes: transformNodes(data), links: [] })
-            }
+            action={(data) => {
+              if (!data) return;
+              setData({ nodes: transformNodes(data), links: [] });
+            }}
           />
         </Container>
         <Container area="connections">
@@ -49,12 +46,15 @@ function App() {
             label="Connections"
             input="Copy and paste the list of connections."
             button="link"
-            action={(data) => setData((prevState) => {
-              return {
-                nodes: prevState.nodes,
-                links: transformLinks(data)
-              }
-            })}
+            action={(data) => {
+              if (!data) return;
+              setData((prevState) => {
+                return {
+                  nodes: prevState.nodes,
+                  links: transformLinks(data),
+                };
+              });
+            }}
             isDisabled={data.nodes.length === 0}
           />
         </Container>
