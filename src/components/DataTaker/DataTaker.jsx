@@ -5,12 +5,10 @@ import {
   dataTaker__input,
   dataTaker__button,
   dataTaker__label,
-  modal__button,
 } from "./DataTaker.module.css";
-import Popup from "reactjs-popup";
-import InfoIcon from "../../assets/InfoIcon";
+import InfoUp from "../InfoUp/InfoUp";
 
-const DataTaker = ({ example, label, input, button, action, isDisabled }) => {
+const DataTaker = ({ example, label, contentPopUp, input, button, action, isDisabled }) => {
   const [data, setData] = useState("");
 
   const handleChange = (e) => {
@@ -33,20 +31,7 @@ const DataTaker = ({ example, label, input, button, action, isDisabled }) => {
           onChange={handleChange}
           disabled={isDisabled}
         />
-        <Popup
-          trigger={
-            <button className={modal__button}>
-              <InfoIcon />
-            </button>
-          }
-          modal
-        >
-          <h2>{label}.</h2>
-          <h6>Must follow this format:</h6>
-          <code>
-            {example.replace(/'/g, '"')}
-          </code>
-        </Popup>
+        <InfoUp label={label} content={contentPopUp} example={example} />
         <button
           className={dataTaker__button}
           onClick={handleSubmit}
@@ -64,6 +49,7 @@ export default DataTaker;
 DataTaker.propTypes = {
   example: PropTypes.string,
   label: PropTypes.string,
+  contentPopUp: PropTypes.string,
   input: PropTypes.string,
   button: PropTypes.string,
   action: PropTypes.func,

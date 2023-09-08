@@ -9,6 +9,7 @@ import {
 } from "./Graph.module.css";
 import dataContext from "../../context/dataContext";
 import ZoomIcon from "../../assets/ZoomIcon";
+import InfoUp from "../InfoUp/InfoUp";
 
 const Graph = () => {
   const { data } = useContext(dataContext);
@@ -57,7 +58,11 @@ const Graph = () => {
           autoPauseRedraw={false}
         />
         <h3 className={graph__container_error}>
-          If the graph turns gray, check your data.
+          <InfoUp
+            label="Riddle Interactive"
+            content="The source code can be found in the public repo linked to the video."
+            example="Please, if the graph does not render check data, click 'launch' and then 'link'."
+          />
         </h3>
         <span className={graph__container_icon}>
           <ZoomIcon />

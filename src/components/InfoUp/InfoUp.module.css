@@ -1,0 +1,11 @@
+.modal__button {
+  background-color: transparent;
+  border: none;
+  color: var(--font-color-primary);
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}

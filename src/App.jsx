@@ -31,6 +31,7 @@ function App() {
           <DataTaker
             example={example1}
             label="Nodes"
+            contentPopUp="Must follow this format:"
             input="Copy and paste the list of nodes (airports)."
             button="launch"
             action={(data) => {
@@ -44,6 +45,7 @@ function App() {
           <DataTaker
             example={example2}
             label="Connections"
+            contentPopUp="Must follow this format:"
             input="Copy and paste the list of connections."
             button="link"
             action={(data) => {
