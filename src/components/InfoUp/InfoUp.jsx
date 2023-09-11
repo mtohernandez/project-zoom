@@ -12,6 +12,7 @@ const InfoUp = ({ label, content, example }) => {
           <InfoIcon />
         </button>
       }
+      
       modal
     >
       <h2>{label}.</h2>

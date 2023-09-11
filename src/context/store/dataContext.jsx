@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
 const dataContext = createContext({
-  data: null,
-  setData: () => {},
+  state: null,
+  dispatch: () => {},
 });
 
 export default dataContext;

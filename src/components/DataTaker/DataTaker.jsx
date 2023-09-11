@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { PropTypes } from "prop-types";
 import {
   dataTaker,
@@ -6,14 +6,17 @@ import {
   dataTaker__button,
   dataTaker__label,
 } from "./DataTaker.module.css";
+import {
+  ADD_TO_NODES
+} from "../../context/actions/actionTypes";
+import dataContext from "../../context/store/dataContext";
 
 const DataTaker = ({
   label,
   input,
   button,
-  action,
-  isDisabled,
 }) => {
+  const { dispatch } = useContext(dataContext);
   const [data, setData] = useState("");
   const inputRef = useRef(null);
 
@@ -24,7 +27,7 @@ const DataTaker = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputRef.current) inputRef.current.value = "";
-    action(data);
+    dispatch({ type: ADD_TO_NODES, payload: data })
   };
 
   return (
@@ -38,13 +41,11 @@ const DataTaker = ({
             type="text"
             placeholder={input}
             onChange={handleChange}
-            disabled={isDisabled}
           />
         )}
         <button
           className={dataTaker__button}
           onClick={handleSubmit}
-          disabled={isDisabled}
         >
           {button}
         </button>
@@ -56,12 +57,7 @@ const DataTaker = ({
 export default DataTaker;
 
 DataTaker.propTypes = {
-  example: PropTypes.string,
   label: PropTypes.string,
-  contentPopUp: PropTypes.string,
   input: PropTypes.string,
   button: PropTypes.string,
-  action: PropTypes.func,
-  runData: PropTypes.func,
-  isDisabled: PropTypes.bool,
 };

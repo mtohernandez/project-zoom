@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
 import ForceGraph2D from "react-force-graph-2d";
 import {
   graph__container,
@@ -7,12 +6,13 @@ import {
   graph__container_error,
   graph__container_icon,
 } from "./Graph.module.css";
-import dataContext from "../../context/dataContext";
+import { CHANGE_START_NODE } from "../../context/actions/actionTypes";
+import dataContext from "../../context/store/dataContext";
 import ZoomIcon from "../../assets/ZoomIcon";
 import InfoUp from "../InfoUp/InfoUp";
 
-const Graph = ({ handleStartingPoint }) => {
-  const { data } = useContext(dataContext);
+const Graph = () => {
+  const { state, dispatch } = useContext(dataContext);
   const fgRef = useRef();
   const updateDuration = 2000;
 
@@ -20,7 +20,7 @@ const Graph = ({ handleStartingPoint }) => {
     if (!fgRef.current) return;
     const fg = fgRef.current;
     fg.zoomToFit(updateDuration, 250);
-  }, [data]);
+  }, [state]);
 
   const handleEngineStop = () => {
     if (!fgRef.current) return;
@@ -29,12 +29,16 @@ const Graph = ({ handleStartingPoint }) => {
     fg.zoomToFit(updateDuration, 250);
   };
 
-  if (data.nodes?.length > 0 && data.links.length > 0) {
+  const handleStartingPoint = (e) => {
+    dispatch({ type: CHANGE_START_NODE, payload: e.target.value });
+  };
+
+  if (state.nodes?.length > 0 && state.links.length > 0) {
     return (
       <div className={graph__container}>
         <ForceGraph2D
           ref={fgRef}
-          graphData={data}
+          graphData={state}
           nodeLabel="id"
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.id;
@@ -43,9 +47,9 @@ const Graph = ({ handleStartingPoint }) => {
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillStyle =
-              data.start === node.id
+              state.start === node.id
                 ? "yellow"
-                : data.needed.includes(node.id)
+                : state.needed.includes(node.id)
                 ? "#5AFF20"
                 : "#FFF";
             ctx.fillText(label, node.x, node.y);
@@ -65,7 +69,7 @@ const Graph = ({ handleStartingPoint }) => {
         <div className={graph__container_error}>
           <select onChange={handleStartingPoint}>
             <option value="">None</option>
-            {data.nodes.map((node) => {
+            {state.nodes.map((node) => {
               return (
                 <option key={node.id} value={node.id}>
                   {node.id}
@@ -75,12 +79,13 @@ const Graph = ({ handleStartingPoint }) => {
           </select>
           <InfoUp
             label="Riddle Interactive"
-            content="If the algorithm is not working, the API is overloaded. Please try again later."
+            content="Try later if not working or check your data."
             example={[
               "1. Add the airports you want to the graph.",
               "2. Make the connection",
               "3. Click on the airport you want to start from.",
               "4. Click on Run and wait for the algorithm to run.",
+              "If you want to reset the graph, click on Reset.",
             ]}
           />
         </div>
@@ -91,7 +96,7 @@ const Graph = ({ handleStartingPoint }) => {
     );
   }
 
-  if (data.nodes?.length > 0 && data.links.length === 0) {
+  if (state.nodes?.length > 0 && state.links.length === 0) {
     return (
       <div className={graph__container}>
         <h3 className={graph__container_awaiter}>Waiting for connections...</h3>
@@ -107,8 +112,3 @@ const Graph = ({ handleStartingPoint }) => {
 };
 
 export default Graph;
-
-Graph.propTypes = {
-  data: PropTypes.object,
-  handleStartingPoint: PropTypes.func,
-};
