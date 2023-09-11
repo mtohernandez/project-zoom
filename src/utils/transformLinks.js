@@ -8,26 +8,10 @@
 //   { source: "JFK", target: "ORD", value: 1 },
 // ];
 
-export const transformLinks = (input) => {
-  try {
-    const cleanUp = input
-      .replace(/\s+/g, "")
-      .replace("[[", "")
-      .replace("],]", "")
-      .replace("]]", "")
-      .split("],["); 
-    
-    const links = cleanUp.map((link) => {
-      const [source, target] = link.split(",");
-      return {
-        source: source.replace(/"/g, ""),
-        target: target.replace(/"/g, ""),
-        value: 1,
-      };
-    });
-
-    return links;
-  } catch (error) {
-    console.log("error");
-  }
+export const transformLinks = (links) => {
+  const transformedLinks = links.map((link) => {
+    if (link.source.id === link.target.id) return;
+    return [link.source.id, link.target.id];
+  });
+  return transformedLinks;
 };

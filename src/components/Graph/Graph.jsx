@@ -11,7 +11,7 @@ import dataContext from "../../context/dataContext";
 import ZoomIcon from "../../assets/ZoomIcon";
 import InfoUp from "../InfoUp/InfoUp";
 
-const Graph = () => {
+const Graph = ({ handleStartingPoint }) => {
   const { data } = useContext(dataContext);
   const fgRef = useRef();
   const updateDuration = 2000;
@@ -19,14 +19,14 @@ const Graph = () => {
   useEffect(() => {
     if (!fgRef.current) return;
     const fg = fgRef.current;
-    fg.zoomToFit(updateDuration, 150);
+    fg.zoomToFit(updateDuration, 250);
   }, [data]);
 
   const handleEngineStop = () => {
     if (!fgRef.current) return;
     const fg = fgRef.current;
 
-    fg.zoomToFit(updateDuration, 150);
+    fg.zoomToFit(updateDuration, 250);
   };
 
   if (data.nodes?.length > 0 && data.links.length > 0) {
@@ -38,11 +38,16 @@ const Graph = () => {
           nodeLabel="id"
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.id;
-            const fontSize = 12 / globalScale;
+            const fontSize = 14 / globalScale;
             ctx.font = `${fontSize}px Rebond Grotesque`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillStyle = "#fff";
+            ctx.fillStyle =
+              data.start === node.id
+                ? "yellow"
+                : data.needed.includes(node.id)
+                ? "#5AFF20"
+                : "#FFF";
             ctx.fillText(label, node.x, node.y);
           }}
           linkColor={() => "#414141"}
@@ -57,13 +62,23 @@ const Graph = () => {
           onEngineStop={handleEngineStop}
           autoPauseRedraw={false}
         />
-        <h3 className={graph__container_error}>
+        <div className={graph__container_error}>
+          <select onChange={handleStartingPoint}>
+            <option value="">None</option>
+            {data.nodes.map((node) => {
+              return (
+                <option key={node.id} value={node.id}>
+                  {node.id}
+                </option>
+              );
+            })}
+          </select>
           <InfoUp
             label="Riddle Interactive"
             content="The source code can be found in the public repo linked to the video."
             example="Please, if the graph does not render check data, click 'launch' and then 'link'."
           />
-        </h3>
+        </div>
         <span className={graph__container_icon}>
           <ZoomIcon />
         </span>
@@ -90,4 +105,5 @@ export default Graph;
 
 Graph.propTypes = {
   data: PropTypes.object,
+  handleStartingPoint: PropTypes.func,
 };

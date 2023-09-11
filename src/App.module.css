@@ -1,1 +1,19 @@
+.run__reset {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-primary);
+  background-color: transparent;
+  color: var(--font-color-primary);
+  transition: all 0.2s ease-in-out;
+}
 
+.run__reset:hover {
+  cursor: pointer;
+  border: 1px solid var(--font-color-primary);
+  background-color: var(--font-color-primary);
+  color: var(--background-primary);
+}

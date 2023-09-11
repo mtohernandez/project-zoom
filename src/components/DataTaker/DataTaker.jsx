@@ -6,9 +6,14 @@ import {
   dataTaker__button,
   dataTaker__label,
 } from "./DataTaker.module.css";
-import InfoUp from "../InfoUp/InfoUp";
 
-const DataTaker = ({ example, label, contentPopUp, input, button, action, isDisabled }) => {
+const DataTaker = ({
+  label,
+  input,
+  button,
+  action,
+  isDisabled,
+}) => {
   const [data, setData] = useState("");
 
   const handleChange = (e) => {
@@ -24,14 +29,15 @@ const DataTaker = ({ example, label, contentPopUp, input, button, action, isDisa
     <>
       <label className={dataTaker__label}>{label}</label>
       <div className={dataTaker}>
-        <input
-          className={dataTaker__input}
-          type="text"
-          placeholder={input}
-          onChange={handleChange}
-          disabled={isDisabled}
-        />
-        <InfoUp label={label} content={contentPopUp} example={example} />
+        {input && (
+          <input
+            className={dataTaker__input}
+            type="text"
+            placeholder={input}
+            onChange={handleChange}
+            disabled={isDisabled}
+          />
+        )}
         <button
           className={dataTaker__button}
           onClick={handleSubmit}
@@ -53,5 +59,6 @@ DataTaker.propTypes = {
   input: PropTypes.string,
   button: PropTypes.string,
   action: PropTypes.func,
+  runData: PropTypes.func,
   isDisabled: PropTypes.bool,
 };

@@ -10,8 +10,41 @@
 }
 
 .airports__airport {
+  position: relative;
   padding: 1rem;
   background-color: rgba(138, 138, 138, 0.5);
   color: var(--font-color-primary);
   border-radius: 10px;
+}
+
+.airports__airport > p {
+  margin-right: 1.5rem;
+}
+
+.airports__select {
+  padding: 1rem;
+  width: 100%;
+  background-color: var(--border-primary);
+  border: none;
+  border-radius: 10px;
+  color: var(--font-color-primary);
+  margin-top: 0.5rem;
+}
+
+.airports__select > option {
+  color: var(--font--color-primary);
+}
+
+.airports__select:focus {
+  outline: none;
+}
+
+.airport__delete {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
