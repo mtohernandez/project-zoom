@@ -41,6 +41,7 @@ const DataTaker = ({
             type="text"
             placeholder={input}
             onChange={handleChange}
+            maxLength={10}
           />
         )}
         <button

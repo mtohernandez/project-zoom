@@ -12,7 +12,7 @@ function App() {
       <Grid>
         <Container area="nodes">
           <Airports />
-          <DataTaker label="Nodes" input="Type a node." button="launch" />
+          <DataTaker label="Nodes" input="Type a node. (max 10 characters)" button="launch" />
           <Button />
         </Container>
         <Container area="graph">
