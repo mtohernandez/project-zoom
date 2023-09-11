@@ -31,7 +31,18 @@ function App() {
   };
 
   const addToLinks = (source, target) => {
-    if (!source || !target) return;
+    if (!source) return;
+
+    if (!target) {
+      setData((prevState) => {
+        return {
+          ...prevState,
+          links: prevState.links.filter((link) => link.source.id !== source),
+        };
+      });
+      return;
+    }
+
     if (
       data.links.find(
         (link) => link.source.id === source && link.target.id === target
