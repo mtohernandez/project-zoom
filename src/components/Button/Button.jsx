@@ -52,6 +52,7 @@ const Button = () => {
     <button
       className={button}
       onClick={needed.length > 0 ? handleReset : handleRequest}
+      disabled={!state.start || state.nodes.length === 0}
     >
       {state.needed.length > 0 ? "Reset" : "Run"}
     </button>

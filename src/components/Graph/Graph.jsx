@@ -42,7 +42,7 @@ const Graph = () => {
           nodeLabel="id"
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.id;
-            const fontSize = 14 / globalScale;
+            const fontSize = 16 / globalScale;
             ctx.font = `${fontSize}px Rebond Grotesque`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
@@ -55,9 +55,9 @@ const Graph = () => {
             ctx.fillText(label, node.x, node.y);
           }}
           linkColor={() => "#414141"}
-          linkDirectionalParticles={2}
-          linkDirectionalParticleWidth={1}
-          linkDirectionalParticleColor={() => "yellow"}
+          linkDirectionalParticles={3}
+          linkDirectionalParticleWidth={2}
+          linkDirectionalParticleColor={() => "#E42920"}
           enablePanInteraction={false}
           enableZoomInteraction={false}
           backgroundColor="#252525"
