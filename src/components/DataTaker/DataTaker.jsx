@@ -6,17 +6,11 @@ import {
   dataTaker__button,
   dataTaker__label,
 } from "./DataTaker.module.css";
-import {
-  ADD_TO_NODES
-} from "../../context/actions/actionTypes";
+import { ADD_TO_NODES } from "../../context/actions/actionTypes";
 import dataContext from "../../context/store/dataContext";
 
-const DataTaker = ({
-  label,
-  input,
-  button,
-}) => {
-  const { dispatch } = useContext(dataContext);
+const DataTaker = ({ label, input, button }) => {
+  const { state, dispatch } = useContext(dataContext);
   const [data, setData] = useState("");
   const inputRef = useRef(null);
 
@@ -27,12 +21,14 @@ const DataTaker = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputRef.current) inputRef.current.value = "";
-    dispatch({ type: ADD_TO_NODES, payload: data })
+    dispatch({ type: ADD_TO_NODES, payload: data });
   };
 
   return (
     <>
-      <label className={dataTaker__label}>{label}</label>
+      <label className={dataTaker__label}>
+        {label} {state.nodes.length > 0 && `(${state.nodes.length} nodes)`}
+      </label>
       <div className={dataTaker}>
         {input && (
           <input
@@ -44,10 +40,7 @@ const DataTaker = ({
             maxLength={10}
           />
         )}
-        <button
-          className={dataTaker__button}
-          onClick={handleSubmit}
-        >
+        <button className={dataTaker__button} onClick={handleSubmit}>
           {button}
         </button>
       </div>
