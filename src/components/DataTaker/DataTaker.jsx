@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { PropTypes } from "prop-types";
 import {
   dataTaker,
@@ -15,6 +15,7 @@ const DataTaker = ({
   isDisabled,
 }) => {
   const [data, setData] = useState("");
+  const inputRef = useRef(null);
 
   const handleChange = (e) => {
     setData(e.target.value);
@@ -22,6 +23,7 @@ const DataTaker = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (inputRef.current) inputRef.current.value = "";
     action(data);
   };
 
@@ -31,6 +33,7 @@ const DataTaker = ({
       <div className={dataTaker}>
         {input && (
           <input
+            ref={inputRef}
             className={dataTaker__input}
             type="text"
             placeholder={input}

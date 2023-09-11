@@ -57,22 +57,4 @@
   right: 0;
 }
 
-/* Spinner */
-.graph__container_spinner {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 5px solid var(--font-color-primary);
-  border-top: 5px solid var(--border-primary);
-  animation: spin 1s infinite;
-}
 
-/* Spinner animation */
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}

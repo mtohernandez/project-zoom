@@ -7,7 +7,7 @@ import DataTaker from "./components/DataTaker/DataTaker";
 import Airports from "./components/Airport/Airports";
 import { transformNodes } from "./utils/transformNodes";
 import { transformLinks } from "./utils/transformLinks";
-import { run__reset } from "./App.module.css";
+import { run__reset, spinner } from "./App.module.css";
 
 function App() {
   const [data, setData] = useState({
@@ -16,6 +16,8 @@ function App() {
     start: "",
     needed: [],
   });
+
+  const [loading, setLoading] = useState(false);
 
   const addToNodes = (nodeID) => {
     if (!nodeID) return;
@@ -113,23 +115,29 @@ function App() {
       body: JSON.stringify(dataToPost),
     };
 
+    setLoading(true);
     const response = await fetch(
       "https://project-api-zoom.onrender.com/airport-connections",
       requestOptions
     );
+    setLoading(false);
     const json = await response.json();
 
-    if(json.error) {
+    if (json.error) {
       alert(json.error);
       return;
     }
 
-    const newLinks = json.connections.map((connection) => {
-      return {
-        source: data.start,
-        target: connection,
-      };
-    });
+    let newLinks = [];
+
+    if (json.connections.length > 0) {
+      newLinks = json.connections.map((connection) => {
+        return {
+          source: data.start,
+          target: connection,
+        };
+      });
+    }
 
     setData((prevState) => {
       return {
@@ -170,12 +178,16 @@ function App() {
             action={addToNodes}
             runData={runData}
           />
-          <button
-            className={run__reset}
-            onClick={data.needed.length > 0 ? reset : runData}
-          >
-            {data.needed.length > 0 ? "Reset" : "Run"}
-          </button>
+          {loading ? (
+            <div className={spinner}></div>
+          ) : (
+            <button
+              className={run__reset}
+              onClick={data.needed.length > 0 ? reset : runData}
+            >
+              {data.needed.length > 0 ? "Reset" : "Run"}
+            </button>
+          )}
         </Container>
         <Container area="graph">
           <Graph data={data} handleStartingPoint={changeStartingPoint} />
