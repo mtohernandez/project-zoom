@@ -75,8 +75,13 @@ const Graph = ({ handleStartingPoint }) => {
           </select>
           <InfoUp
             label="Riddle Interactive"
-            content="The source code can be found in the public repo linked to the video."
-            example="Please, if the graph does not render check data, click 'launch' and then 'link'."
+            content="If the algorithm is not working, the API is overloaded. Please try again later."
+            example={[
+              "1. Add the airports you want to the graph.",
+              "2. Make the connection",
+              "3. Click on the airport you want to start from.",
+              "4. Click on Run and wait for the algorithm to run.",
+            ]}
           />
         </div>
         <span className={graph__container_icon}>

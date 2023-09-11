@@ -16,7 +16,11 @@ const InfoUp = ({ label, content, example }) => {
     >
       <h2>{label}.</h2>
       <h6>{content}</h6>
-      {example && <code>{example.replace(/'/g, '"')}</code>}
+      {
+        example.map((ex, index) => {
+          return <p key={index}>{ex}</p>;
+        })
+      }
     </Popup>
   );
 };
@@ -25,6 +29,6 @@ export default InfoUp;
 
 InfoUp.propTypes = {
   label: PropTypes.string,
-  example: PropTypes.string,
+  example: PropTypes.arrayOf(PropTypes.string),
   content: PropTypes.string,
 };
