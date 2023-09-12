@@ -18,11 +18,11 @@ export const initialState = {
 export const dataReducer = (state, action) => {
   switch (action.type) {
     case ADD_TO_NODES:
-      if (action.payload === "") return state;
-      if (state.nodes.find((node) => node.id === action.payload)) return state;
+      if (action.payload.trim() === "") return state;
+      if (state.nodes.find((node) => node.id === action.payload.trim())) return state;
       return {
         ...state,
-        nodes: [...state.nodes, { id: action.payload, group: 1 }],
+        nodes: [...state.nodes, { id: action.payload.trim(), group: 1 }],
       };
 
     case ADD_TO_LINKS:

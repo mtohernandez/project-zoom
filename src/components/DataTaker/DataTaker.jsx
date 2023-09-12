@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect, useCallback } from "react";
 import { PropTypes } from "prop-types";
 import {
   dataTaker,
@@ -18,11 +18,28 @@ const DataTaker = ({ label, input, button }) => {
     setData(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (inputRef.current) inputRef.current.value = "";
-    dispatch({ type: ADD_TO_NODES, payload: data });
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (inputRef.current) inputRef.current.value = "";
+      dispatch({ type: ADD_TO_NODES, payload: data });
+    },
+    [dispatch, data]
+  );
+
+  useEffect(() => {
+    const keyHandler = (e) => {
+      if (e.key === "Enter") {
+        handleSubmit(e);
+      }
+    };
+
+    window.addEventListener("keydown", keyHandler);
+
+    return () => {
+      window.removeEventListener("keydown", keyHandler);
+    };
+  }, [handleSubmit]);
 
   return (
     <>
