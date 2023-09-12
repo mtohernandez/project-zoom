@@ -7,6 +7,8 @@
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+
+  transition: all 0.3s ease-in-out;
 }
 
 .airports__airport {
@@ -15,6 +17,12 @@
   background-color: rgba(138, 138, 138, 0.5);
   color: var(--font-color-primary);
   border-radius: 10px;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.airports__airport:hover {
+  background-color: rgba(138, 138, 138, 0.8);
 }
 
 .airports__airport > p {
